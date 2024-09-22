@@ -13,7 +13,8 @@ app = Flask(__name__)
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
     print(f"Received message: {message.text}")
-    bot.reply_to(message, "Hello, world!")
+    bot.send_message(message.chat.id, "Hello, world!")
+    #bot.reply_to(message, "Hello, world!")
 
 # For webhook support: Use Flask to handle Telegram webhook
 @app.route('/' + TOKEN, methods=['POST'])
