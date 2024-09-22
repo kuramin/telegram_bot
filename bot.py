@@ -5,9 +5,13 @@ from flask import Flask, request
 # Get your bot token from an environment variable (keep your token secure!)
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 WEBHOOK_URL = os.getenv("WEBHOOK_URL")
-bot = telebot.TeleBot(TOKEN)
+bot = telebot.TeleBot(token=TOKEN)
 
 app = Flask(__name__)
+
+@bot.message_handler(commands=['start']) # welcome message handler
+def send_welcome(message):
+    bot.reply_to(message, 'Hello! I am bot')
 
 # Handle all text messages sent to the bot
 @bot.message_handler(func=lambda message: True)
