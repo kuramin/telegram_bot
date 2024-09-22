@@ -16,9 +16,17 @@ def send_welcome(message):
 # Handle all text messages sent to the bot
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
-    print(f"Received message: {message.text}")
-    bot.send_message(message.chat.id, "Hello, world!")
-    #bot.reply_to(message, "Hello, world!")
+    try:
+        print(f"Received message: {message.text}")
+        bot.send_message(message.chat.id, "Hello, world!")
+        #bot.reply_to(message, "Hello, world!")
+    except ApiTelegramException as e:
+        print('exception during send', e)
+        if e.error_code == 429:
+            retry_after = int(e.result_json['parameters']['retry_after'])
+            print(f"Rate limit exceeded. Retrying after {retry_after} seconds...")
+            time.sleep(retry_after)
+            echo_all(message)  # Retry the request after waiting
 
 # For webhook support: Use Flask to handle Telegram webhook
 @app.route('/' + TOKEN, methods=['POST'])
