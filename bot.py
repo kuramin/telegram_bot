@@ -12,14 +12,19 @@ app = Flask(__name__)
 # Handle all text messages sent to the bot
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
+    print(f"Received message: {message.text}")
     bot.reply_to(message, "Hello, world!")
 
 # For webhook support: Use Flask to handle Telegram webhook
 @app.route('/' + TOKEN, methods=['POST'])
 def getMessage():
-    json_str = request.stream.read().decode('UTF-8')
-    update = telebot.types.Update.de_json(json_str)
-    bot.process_new_updates([update])
+    try:
+        json_str = request.stream.read().decode('UTF-8')
+        update = telebot.types.Update.de_json(json_str)
+        bot.process_new_updates([update])
+        print("Webhook data processed successfully")
+    except Exception as e:
+        print(f"Error processing webhook: {e}")
     return "!", 200
 
 # Webhook set-up (this is not strictly necessary but it's good practice)
