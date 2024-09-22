@@ -4,6 +4,7 @@ from flask import Flask, request
 
 # Get your bot token from an environment variable (keep your token secure!)
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+WEBHOOK_URL = os.getenv("WEBHOOK_URL")
 bot = telebot.TeleBot(TOKEN)
 
 app = Flask(__name__)
@@ -25,7 +26,8 @@ def getMessage():
 @app.route("/")
 def webhook():
     bot.remove_webhook()
-    bot.set_webhook(url=os.getenv("WEBHOOK_URL") + TOKEN)
+    print(f"WEBHOOK_URL together with TOKEN is {WEBHOOK_URL}/{TOKEN}")
+    bot.set_webhook(url=f"{WEBHOOK_URL}/{TOKEN}")
     return "Webhook set", 200
 
 if __name__ == "__main__":
