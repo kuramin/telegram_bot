@@ -47,6 +47,7 @@ def webhook():
     bot.remove_webhook()
     print(f"WEBHOOK_URL together with TOKEN is {WEBHOOK_URL}/{TOKEN}")
     bot.set_webhook(url=f"{WEBHOOK_URL}/{TOKEN}")
+    print("Webhook was set")
     return "Webhook set", 200
 
 if __name__ == "__main__":
