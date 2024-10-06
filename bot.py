@@ -11,6 +11,7 @@ app = Flask(__name__)
 
 @bot.message_handler(commands=['start']) # welcome message handler
 def send_welcome(message):
+    print(f"reply Hello Im bot to {message}") 
     bot.reply_to(message, 'Hello! I am bot')
 
 # Handle all text messages sent to the bot
