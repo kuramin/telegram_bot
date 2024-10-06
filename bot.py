@@ -16,7 +16,7 @@ app = Flask(__name__)
 #    print(f"reply Hello Im bot to {message}") 
 #    bot.reply_to(message, 'Hello! I am bot')
 
-@app.message_handler(func=lambda message: True)
+@bot.message_handler(func=lambda message: True)
 def echo_all(message):
     try:
         print(f"Received message: {message.text}")
