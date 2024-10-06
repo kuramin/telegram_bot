@@ -16,7 +16,7 @@ app = Flask(__name__)
 #    print(f"reply Hello Im bot to {message}") 
 #    bot.reply_to(message, 'Hello! I am bot')
 
-@bot.message_handler(func=lambda message: True)
+@app.message_handler(func=lambda message: True)
 def echo_all(message):
     try:
         print(f"Received message: {message.text}")
@@ -67,5 +67,9 @@ def webhook_update():  # somehow it was also launched right after going live
     return "Webhook set", 200
 
 if __name__ == "__main__":
-    webhook_update()
+    #webhook_update()
+    bot.remove_webhook()
+    print(f"WEBHOOK_URL together with TOKEN is {WEBHOOK_URL}/{TOKEN}")
+    bot.set_webhook(url=f"{WEBHOOK_URL}/{TOKEN}")
+    print("Webhook was set")
     app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)), debug=True)
