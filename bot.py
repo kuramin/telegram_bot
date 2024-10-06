@@ -5,7 +5,7 @@ from flask import Flask, request
 # Get your bot token from an environment variable (keep your token secure!)
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 WEBHOOK_URL = os.getenv("WEBHOOK_URL")
-bot = telebot.TeleBot(token=TOKEN)
+bot = telebot.TeleBot(token=TOKEN, threaded=False)
 
 app = Flask(__name__)
 
@@ -59,17 +59,19 @@ def webhook():
 
 # Webhook set-up (this is not strictly necessary but it's good practice)
 #@app.route("/webhook", methods=["POST"])  # defines what happens when https://telegram-bot-34zs.onrender.com/webhook is visited
-def webhook_update():  # somehow it was also launched right after going live
-    bot.remove_webhook()
-    print(f"WEBHOOK_URL together with TOKEN is {WEBHOOK_URL}/{TOKEN}")
-    bot.set_webhook(url=f"{WEBHOOK_URL}/{TOKEN}")
-    print("Webhook was set")
-    return "Webhook set", 200
+#def webhook_update():  # somehow it was also launched right after going live
+#    bot.remove_webhook()
+#    print(f"WEBHOOK_URL together with TOKEN is {WEBHOOK_URL}/{TOKEN}")
+#    bot.set_webhook(url=f"{WEBHOOK_URL}/{TOKEN}")
+#    print("Webhook was set")
+#    return "Webhook set", 200
+
+print(f"__name__ is {__name__}")
 
 if __name__ == "__main__":
     #webhook_update()
-    bot.remove_webhook()
     print(f"WEBHOOK_URL together with TOKEN is {WEBHOOK_URL}/{TOKEN}")
+    bot.remove_webhook()
     bot.set_webhook(url=f"{WEBHOOK_URL}/{TOKEN}")
     print("Webhook was set")
     app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)), debug=True)
