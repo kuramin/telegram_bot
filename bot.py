@@ -34,6 +34,7 @@ def send_welcome(message):
 def getMessage():
     try:
         json_str = request.stream.read().decode('UTF-8')
+        print("json_str is {json_str}")
         update = telebot.types.Update.de_json(json_str)
         bot.process_new_updates([update])
         print("Webhook data processed successfully")
@@ -51,4 +52,4 @@ def webhook():
     return "Webhook set", 200
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
+    app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)), debug=True)
