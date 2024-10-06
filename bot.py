@@ -43,12 +43,15 @@ def getMessage():
 
 # Webhook set-up (this is not strictly necessary but it's good practice)
 @app.route("/")
-def webhook():
-    bot.remove_webhook()
-    print(f"WEBHOOK_URL together with TOKEN is {WEBHOOK_URL}/{TOKEN}")
-    bot.set_webhook(url=f"{WEBHOOK_URL}/{TOKEN}")
-    print("Webhook was set")
-    return "Webhook set", 200
+def index():
+    return "index"
+    
+#def webhook():
+#    bot.remove_webhook()
+#    print(f"WEBHOOK_URL together with TOKEN is {WEBHOOK_URL}/{TOKEN}")
+#    bot.set_webhook(url=f"{WEBHOOK_URL}/{TOKEN}")
+#    print("Webhook was set")
+#    return "Webhook set", 200
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
