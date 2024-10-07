@@ -1,10 +1,12 @@
 import os
 import telebot
 from flask import Flask, request
+import datetime
 
 # Get your bot token from an environment variable (keep your token secure!)
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 WEBHOOK_URL = os.getenv("WEBHOOK_URL")
+LOGS_RECEIVER_CHAT_ID = 549615646
 bot = telebot.TeleBot(token=TOKEN, threaded=False)
 app = Flask(__name__)
 
@@ -17,11 +19,15 @@ app = Flask(__name__)
 def echo_all(message):
     try:
         print(f"Received message: {message.text}, {message.from_user.first_name}, {message.from_user.username}")
+        timestamp_of_message = message.date
+        timestamp_string = datetime.datetime.fromtimestamp(timestamp_of_message).strftime('%Y-%m-%dT%H:%M:%SZ')
+        print(f"timestamp_string {timestamp_string}")
         bot.reply_to(message, "Hello, world! is what I say to every message")
+        bot.send_message(LOGS_RECEIVER_CHAT_ID, f"{timestamp_string} : Username {message.from_user.username} with first name {message.from_user.first_name} and id {message.from_user.id} sent: {message.text}")
     except telebot.apihelper.ApiTelegramException as e:
         print('exception during answering:', e)
 
-# For webhook support: Use Flask to handle Telegram webhook
+# Receives webhook from Telegram, decodes it and calls message_handler
 @app.route('/' + TOKEN, methods=['POST'])
 def webhook():
     try:
