@@ -16,7 +16,7 @@ app = Flask(__name__)
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
     try:
-        print(f"Received message: {message.text}")
+        print(f"Received message: {message.text}, {message.from_user.first_name}, {message.from_user.username}")
         bot.reply_to(message, "Hello, world! is what I say to every message")
     except telebot.apihelper.ApiTelegramException as e:
         print('exception during answering:', e)
@@ -25,11 +25,9 @@ def echo_all(message):
 @app.route('/' + TOKEN, methods=['POST'])
 def webhook():
     try:
-        json_str = request.stream.read()
+        json_str = request.stream.read().decode('UTF-8')
         print(f"json_str is {json_str}")
-        json_str_decoded = json_str.decode('UTF-8')
-        print(f"json_str_decoded is {json_str_decoded}")
-        update = telebot.types.Update.de_json(json_str_decoded)
+        update = telebot.types.Update.de_json(json_str)
         bot.process_new_updates([update])
         print("Webhook data processed successfully")
         return "!", 200
