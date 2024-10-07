@@ -22,18 +22,20 @@ def echo_all(message):
         print('exception during answering:', e)
 
 # For webhook support: Use Flask to handle Telegram webhook
-#@app.route('/' + TOKEN, methods=['POST'])
-#def webhook():
-#    try:
-#        json_str = request.stream.read().decode('UTF-8')
-#        print(f"json_str is {json_str}")
-#        update = telebot.types.Update.de_json(json_str)
-#        bot.process_new_updates([update])
-#        print("Webhook data processed successfully")
-#        return "!", 200
-#    except Exception as e:
-#        print(f"Error processing webhook: {e}")
-#        return e
+@app.route('/' + TOKEN, methods=['POST'])
+def webhook():
+    try:
+        json_str = request.stream.read()
+        print(f"json_str is {json_str}")
+        json_str_decoded = json_str.decode('UTF-8')
+        print(f"json_str_decoded is {json_str_decoded}")
+        update = telebot.types.Update.de_json(json_str_decoded)
+        bot.process_new_updates([update])
+        print("Webhook data processed successfully")
+        return "!", 200
+    except Exception as e:
+        print(f"Error processing webhook: {e}")
+        return e
     
 # Webhook set-up (this is not strictly necessary but it's good practice).
 # Defines that webhook can be reset by https://telegram-bot-34zs.onrender.com/webhook
