@@ -37,7 +37,7 @@ def webhook():
     
 # Webhook set-up (this is not strictly necessary but it's good practice)
 @app.route("/webhook", methods=["POST"])  # defines what happens when https://telegram-bot-34zs.onrender.com/webhook is visited
-def reset_webhook_from_envvars():  # somehow it was also launched right after going live
+def reset_webhook():  # somehow it was also launched right after going live
     bot.remove_webhook()
     print(f"WEBHOOK_URL together with TOKEN is {WEBHOOK_URL}/{TOKEN}")
     bot.set_webhook(url=f"{WEBHOOK_URL}/{TOKEN}")
@@ -45,7 +45,7 @@ def reset_webhook_from_envvars():  # somehow it was also launched right after go
     return "Webhook set", 200
 
 if __name__ == "__main__":
-    reset_webhook_from_envvars()
+    reset_webhook()
     #print(f"WEBHOOK_URL together with TOKEN is {WEBHOOK_URL}/{TOKEN}")
     #bot.remove_webhook()
     #bot.set_webhook(url=f"{WEBHOOK_URL}/{TOKEN}")
