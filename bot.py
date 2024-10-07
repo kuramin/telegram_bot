@@ -32,7 +32,7 @@ def echo_all(message):
         timestamp_string = datetime.datetime.fromtimestamp(timestamp_of_message).strftime('%Y-%m-%dT%H:%M:%SZ')
         print(f"timestamp_string {timestamp_string}")
         reply_text = read_reply_text("reply.txt")
-        bot.reply_to(message, reply_text)
+        bot.reply_to(message, reply_text, disable_web_page_preview=True)
         bot.send_message(LOGS_RECEIVER_CHAT_ID, f"{timestamp_string} : Username {message.from_user.username} with first name {message.from_user.first_name} and id {message.from_user.id} sent: {message.text}")
     except telebot.apihelper.ApiTelegramException as e:
         print('exception during answering:', e)
