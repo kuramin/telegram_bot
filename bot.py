@@ -15,6 +15,15 @@ app = Flask(__name__)
 #    print(f"reply Hello Im bot to {message}") 
 #    bot.reply_to(message, 'Hello! I am bot')
 
+# Function to read the content of the text file
+def read_reply_text(txt_file_path):
+    try:
+        with open(txt_file_path, "r", encoding="utf-8") as file:
+            return file.read()
+    except FileNotFoundError:
+        print(f"Error: {txt_file_path} file not found!")
+        return "Что-то пошло не так" 
+
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
     try:
@@ -22,7 +31,8 @@ def echo_all(message):
         timestamp_of_message = message.date
         timestamp_string = datetime.datetime.fromtimestamp(timestamp_of_message).strftime('%Y-%m-%dT%H:%M:%SZ')
         print(f"timestamp_string {timestamp_string}")
-        bot.reply_to(message, "Hello, world! is what I say to every message")
+        reply_text = read_reply_text("reply.txt")
+        bot.reply_to(message, reply_text)
         bot.send_message(LOGS_RECEIVER_CHAT_ID, f"{timestamp_string} : Username {message.from_user.username} with first name {message.from_user.first_name} and id {message.from_user.id} sent: {message.text}")
     except telebot.apihelper.ApiTelegramException as e:
         print('exception during answering:', e)
