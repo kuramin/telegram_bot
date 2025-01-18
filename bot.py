@@ -60,6 +60,14 @@ def reset_webhook():  # somehow it was also launched right after going live
     bot.set_webhook(url=f"{WEBHOOK_URL}/{TOKEN}")
     print("Webhook was reset")
     return "Webhook set", 200
+    
+@app.route("/webhook", methods=["GET"])
+def reset2_webhook():  # somehow it was also launched right after going live
+    #bot.remove_webhook()
+    print(f"WEBHOOK_URL together with TOKEN is {WEBHOOK_URL}/{TOKEN}")
+    bot.set_webhook(url=f"{WEBHOOK_URL}/{TOKEN}")
+    print("Webhook was reset")
+    return "Webhook set", 200
 
 if __name__ == "__main__":
     reset_webhook()
