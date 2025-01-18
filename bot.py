@@ -22,7 +22,7 @@ def read_reply_text(txt_file_path):
             return file.read()
     except FileNotFoundError:
         print(f"Error: {txt_file_path} file not found!")
-        return "Что-то пошло не так." 
+        return "Tried to read, but file not found" 
 
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
@@ -63,4 +63,4 @@ def reset_webhook():  # somehow it was also launched right after going live
 
 if __name__ == "__main__":
     reset_webhook()
-    app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)), debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 10000)), debug=True)
