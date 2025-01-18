@@ -62,5 +62,5 @@ def reset_webhook():  # somehow it was also launched right after going live
     return "Webhook set", 200
 
 if __name__ == "__main__":
-    reset_webhook()
+    #reset_webhook()
     app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 10000)), debug=True)
