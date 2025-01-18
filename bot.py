@@ -61,6 +61,14 @@ def reset_webhook():  # somehow it was also launched right after going live
     print("Webhook was reset")
     return "Webhook set", 200
     
+@app.route("/december_ends", methods=["GET"])
+def december_ends():
+    #bot.remove_webhook()
+    print(f"WEBHOOK_URL together with TOKEN is {WEBHOOK_URL}/{TOKEN}")
+    #bot.set_webhook(url=f"{WEBHOOK_URL}/{TOKEN}")
+    print("December ends")
+    return "December", 200
+    
 if __name__ == "__main__":
     #reset_webhook()
     app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 10000)), debug=True)
