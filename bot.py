@@ -22,7 +22,7 @@ def read_reply_text(txt_file_path):
             return file.read()
     except FileNotFoundError:
         print(f"Error: {txt_file_path} file not found!")
-        return "Что-то пошло не так" 
+        return "Что-то пошло не так." 
 
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
