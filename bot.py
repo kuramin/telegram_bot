@@ -65,7 +65,7 @@ def reset_webhook():  # somehow it was also launched right after going live
 def december_ends():
     #bot.remove_webhook()
     print(f"WEBHOOK_URL together with TOKEN is {WEBHOOK_URL}/{TOKEN}")
-    #bot.set_webhook(url=f"{WEBHOOK_URL}/{TOKEN}")
+    bot.set_webhook(url=f"{WEBHOOK_URL}/{TOKEN}")
     print("December ends")
     return "December", 200
     
